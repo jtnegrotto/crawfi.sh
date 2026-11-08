@@ -11,8 +11,14 @@ html {
 body {
   font-size: 1.6rem;
   font-family: var(--font-sans);
+  background-color: #111;
 }
 
-main {
-  margin: 3rem;
+#site-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100hw;
+  height: 100vh;
+  overflow: hidden;
 }
