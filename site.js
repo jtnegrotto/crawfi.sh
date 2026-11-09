@@ -20,7 +20,7 @@ function initBackground() {
     ctx.scale(scale, scale)
 
     ctx.font = '14px monospace'
-    ctx.fillStyle = '#cccccc'
+    ctx.fillStyle = '#91b8a5'
     ctx.textBaseline = 'top'
   }
 
