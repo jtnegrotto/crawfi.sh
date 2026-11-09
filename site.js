@@ -2,9 +2,12 @@ function initBackground() {
   const canvas = document.getElementById('site-background')
   const ctx = canvas.getContext('2d')
 
+  let width = window.innerWidth
+  let height = window.innerHeight
+
   function resizeCanvas() {
-    const width = window.innerWidth
-    const height = window.innerHeight
+    width = window.innerWidth
+    height = window.innerHeight
     canvas.style.width = `${width}px`
     canvas.style.height = `${height}px`
 
@@ -37,11 +40,11 @@ function initBackground() {
   const cellHeight = 16
   const chars = ' .:+=%#@'
   function drawBackground(ts) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.clearRect(0, 0, width, height)
     const secs = ts / 1000
     
-    for (let y = 0; y < canvas.height; y += cellHeight) {
-      for (let x = 0; x < canvas.width ; x += cellWidth) {
+    for (let y = 0; y < height; y += cellHeight) {
+      for (let x = 0; x < width ; x += cellWidth) {
         const brightness = brightnessAt(x, y, secs)
         const idx = Math.min(chars.length - 1, Math.floor(brightness * chars.length))
         const c = chars[idx]
@@ -59,7 +62,20 @@ function initBackground() {
   function waveAt(x, y, secs) {
     const waveA = Math.sin(x * waveHFreqA + y * waveVFreqA + secs * waveSpeedA)
     const waveB = Math.sin(x * waveHFreqB + y * waveVFreqB + secs * waveSpeedB)
-    return (waveA + waveB) / 2
+    const base = (waveA + waveB) / 2
+    return (base + rippleAt(x, y, secs)) / 2
+  }
+
+  const rippleWidth = 40
+  const rippleSpeed = 60
+  function rippleAt(x, y, secs) {
+    const centerX = width / 2
+    const centerY = height / 2
+    const centerDist = Math.hypot(x - centerX, y - centerY)
+    const radius = secs * rippleSpeed
+    const ringDist = centerDist - radius
+    const envelope = Math.exp(-Math.pow(ringDist / rippleWidth, 2))
+    return Math.sin(centerDist * 0.1 - secs * 8) * envelope
   }
 
   const sampleOffset = 4
