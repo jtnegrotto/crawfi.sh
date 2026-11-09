@@ -37,6 +37,7 @@ body {
 }
 
 #site-content {
+  margin: 2rem;
   padding: 2rem 3rem;
   background: rgba(17, 17, 17, 0.8);
   color: #ccc;

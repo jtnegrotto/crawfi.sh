@@ -39,9 +39,13 @@ function initBackground() {
 
     const secs = ts / 1000
 
+    const isMobile = width < 600
+    const minDelay = isMobile ? 3.6 : 0.9
+    const randomDelay = isMobile ? 1.4 : 0.7
+
     if (secs >= nextRippleSecs) {
       addRipple(secs)
-      nextRippleSecs = secs + 0.9 + Math.random() * 0.9
+      nextRippleSecs = secs + minDelay + Math.random() * randomDelay
     }
 
     for (let i = ripples.length - 1; i >= 0; i--) {
