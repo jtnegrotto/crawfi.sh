@@ -35,14 +35,28 @@ function initBackground() {
 
   const cellWidth = 14
   const cellHeight = 16
+  const chars = ' .:+=#%@'
   function drawBackground(ts) {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
+    const secs = ts / 1000
     
     for (let y = 0; y < canvas.height; y += cellHeight) {
       for (let x = 0; x < canvas.width ; x += cellWidth) {
-        ctx.fillText('@', x, y)
+        const value = surfaceAt(x, y, secs)
+        const idx = Math.min(chars.length - 1, Math.floor(value * chars.length))
+        const c = chars[idx]
+        ctx.fillText(c, x, y)
       }
     }
+  }
+
+  const waveHFreq = 0.02
+  const waveVFreq = 0.01
+  const waveSpeed = 0.4
+  function surfaceAt(x, y, time) {
+    const value = Math.sin(x * waveHFreq + y * waveVFreq + time * waveSpeed)
+    const norm = (value + 1) / 2
+    return norm
   }
 
   resizeCanvas()
