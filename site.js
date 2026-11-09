@@ -35,7 +35,7 @@ function initBackground() {
 
   const cellWidth = 14
   const cellHeight = 16
-  const chars = ' .:+=#%@'
+  const chars = ' .:+=%#@'
   function drawBackground(ts) {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     const secs = ts / 1000
@@ -50,12 +50,17 @@ function initBackground() {
     }
   }
 
-  const waveHFreq = 0.02
-  const waveVFreq = 0.01
-  const waveSpeed = 0.4
+  const waveHFreqA = 0.02
+  const waveVFreqA = 0.01
+  const waveSpeedA = 0.4
+  const waveHFreqB = 0.01
+  const waveVFreqB = -0.025
+  const waveSpeedB = -0.3
   function surfaceAt(x, y, time) {
-    const value = Math.sin(x * waveHFreq + y * waveVFreq + time * waveSpeed)
-    const norm = (value + 1) / 2
+    const waveA = Math.sin(x * waveHFreqA + y * waveVFreqA + time * waveSpeedA)
+    const waveB = Math.sin(x * waveHFreqB + y * waveVFreqB + time * waveSpeedB)
+    const wave = (waveA + waveB) / 2
+    const norm = (wave + 1) / 2
     return norm
   }
 
