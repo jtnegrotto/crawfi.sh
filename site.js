@@ -41,7 +41,7 @@ function initBackground() {
 
     if (secs >= nextRippleSecs) {
       addRipple(secs)
-      nextRippleSecs = secs + 0.7 + Math.random() * 0.7
+      nextRippleSecs = secs + 0.9 + Math.random() * 0.9
     }
 
     for (let i = ripples.length - 1; i >= 0; i--) {
@@ -76,7 +76,7 @@ function initBackground() {
   const waveVFreqB = -0.025
   const waveSpeedB = -0.3
   const waveStrength = 0.8
-  const rippleStrength = 1
+  const rippleStrength = 1.2
   function waveAt(x, y, secs) {
     const warp = warpAt(x, y, secs)
 
