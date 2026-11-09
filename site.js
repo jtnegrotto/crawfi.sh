@@ -42,8 +42,8 @@ function initBackground() {
     
     for (let y = 0; y < canvas.height; y += cellHeight) {
       for (let x = 0; x < canvas.width ; x += cellWidth) {
-        const value = surfaceAt(x, y, secs)
-        const idx = Math.min(chars.length - 1, Math.floor(value * chars.length))
+        const brightness = brightnessAt(x, y, secs)
+        const idx = Math.min(chars.length - 1, Math.floor(brightness * chars.length))
         const c = chars[idx]
         ctx.fillText(c, x, y)
       }
@@ -56,12 +56,21 @@ function initBackground() {
   const waveHFreqB = 0.01
   const waveVFreqB = -0.025
   const waveSpeedB = -0.3
-  function surfaceAt(x, y, time) {
-    const waveA = Math.sin(x * waveHFreqA + y * waveVFreqA + time * waveSpeedA)
-    const waveB = Math.sin(x * waveHFreqB + y * waveVFreqB + time * waveSpeedB)
-    const wave = (waveA + waveB) / 2
-    const norm = (wave + 1) / 2
-    return norm
+  function waveAt(x, y, secs) {
+    const waveA = Math.sin(x * waveHFreqA + y * waveVFreqA + secs * waveSpeedA)
+    const waveB = Math.sin(x * waveHFreqB + y * waveVFreqB + secs * waveSpeedB)
+    return (waveA + waveB) / 2
+  }
+
+  const sampleOffset = 4
+  const lightDirectionX = 0.7
+  const lightDirectionY = -0.5
+  const gain = 6
+  function brightnessAt(x, y, secs) {
+    const slopeX = waveAt(x + sampleOffset, y, secs) - waveAt(x - sampleOffset, y, secs)
+    const slopeY = waveAt(x, y + sampleOffset, secs) - waveAt(x, y - sampleOffset, secs)
+    const light = slopeX * lightDirectionX + slopeY * lightDirectionY
+    return Math.max(0, Math.min(1, light * gain))
   }
 
   resizeCanvas()
