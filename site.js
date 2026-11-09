@@ -75,10 +75,13 @@ function initBackground() {
   const waveHFreqB = 0.01
   const waveVFreqB = -0.025
   const waveSpeedB = -0.3
-  const rippleStrength = 0.5
+  const waveStrength = 0.8
+  const rippleStrength = 1
   function waveAt(x, y, secs) {
-    const waveA = Math.sin(x * waveHFreqA + y * waveVFreqA + secs * waveSpeedA)
-    const waveB = Math.sin(x * waveHFreqB + y * waveVFreqB + secs * waveSpeedB)
+    const warp = warpAt(x, y, secs)
+
+    const waveA = Math.sin(warp.x * waveHFreqA + warp.y * waveVFreqA + secs * waveSpeedA)
+    const waveB = Math.sin(warp.x * waveHFreqB + warp.y * waveVFreqB + secs * waveSpeedB)
     const base = (waveA + waveB) / 2
     let disturbance = 0
 
@@ -86,7 +89,35 @@ function initBackground() {
       disturbance += rippleAt(x, y, secs, ripple)
     }
 
-    return base + disturbance * rippleStrength
+    return base * waveStrength + disturbance * rippleStrength
+  }
+
+  const warpXAmpA = 19
+  const warpXAmpB = 13
+  const warpXFreqA = 0.02
+  const warpXFreqB = 0.012
+  const warpXFreqC = 0.014
+  const warpXSpeedA =   0.17
+  const warpXSpeedB =   0.13
+  const warpYAmpA = 17
+  const warpYAmpB = 12
+  const warpYFreqA = 0.015
+  const warpYFreqB = 0.007
+  const warpYFreqC = 0.012
+  const warpYSpeedA = 0.14
+  const warpYSpeedB = 0.11
+  function warpAt(x, y, secs) {
+    const warpX = 
+      warpXAmpA * Math.sin(y * warpXFreqA + secs * warpXSpeedA) +
+      warpXAmpB * Math.sin(x * warpXFreqB - y * warpXFreqC - secs * warpXSpeedB)
+    const warpY =
+      warpYAmpA * Math.cos(x * warpYFreqA - secs * warpYSpeedA) +
+      warpYAmpB * Math.sin(x * warpYFreqB + y * warpYFreqC + secs * warpYSpeedB)
+
+    return {
+      x: x + warpX,
+      y: y + warpY,
+    }
   }
 
   const rippleSpread = 40
