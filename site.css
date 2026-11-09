@@ -18,7 +18,56 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100hw;
+  width: 100vw;
   height: 100vh;
   overflow: hidden;
+  z-index: 0;
+}
+
+#site-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+#site-content {
+  padding: 2rem 3rem;
+  background: rgba(17, 17, 17, 0.8);
+  color: #ccc;
+  border-radius: 5px;
+}
+
+#site-title {
+  font-size: 1em;
+  font-weight: semibold;
+  margin-bottom: 2em;
+}
+
+#site-links {
+  list-style: none;
+  margin-top: 1em;
+  margin-left: 0;
+  font-size: 1.75em;
+}
+
+#site-links a {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.icon {
+  height: 1em;
+  width: 1em;
+  vertical-align: -0.125em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
