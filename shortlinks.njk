@@ -1,0 +1,18 @@
+---
+pagination:
+  data: shortlinks
+  size: 1
+  alias: slug
+permalink: "/{{ slug }}.html"
+eleventyExcludeFromCollections: true
+layout: false
+---
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="refresh" content="0; url={{ shortlinks[slug] | escape }}">
+    <meta name="robots" content="noindex">
+  </head>
+</html>
+
