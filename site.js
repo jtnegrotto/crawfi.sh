@@ -138,10 +138,10 @@ function initBackground() {
     return Math.sin(ringDist * rippleFreq) * envelope * fade
   }
 
-  function addRipple(secs) {
+  function addRipple(secs, x = null, y = null) {
     ripples.push({
-      x: Math.random() * width,
-      y: Math.random() * height,
+      x: (x || Math.random() * width),
+      y: (y || Math.random() * height),
       startSecs: secs,
     })
   }
@@ -160,6 +160,11 @@ function initBackground() {
   resizeCanvas()
   requestAnimationFrame(animate)
   window.addEventListener('resize', resizeCanvas)
+
+  document.body.addEventListener('click', (e) => {
+    const secs = document.timeline.currentTime / 1000
+    addRipple(secs, e.x, e.y)
+  })
 }
 
 document.addEventListener('DOMContentLoaded', () => {
