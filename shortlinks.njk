@@ -7,12 +7,18 @@ permalink: "/{{ slug }}.html"
 eleventyExcludeFromCollections: true
 layout: false
 ---
+{% set url = shortlinks[slug] %}
 <!doctype html>
 <html>
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="refresh" content="0; url={{ shortlinks[slug] | escape }}">
+    <meta http-equiv="refresh" content="0; url={{ url | escape }}">
     <meta name="robots" content="noindex">
+    <title>Redirecting</title>
   </head>
+
+  <body>
+    <p>Redirecting to <a href="{{ url | escape }}">{{ url | escape }}</a>.</p>
+  </body>
 </html>
 
