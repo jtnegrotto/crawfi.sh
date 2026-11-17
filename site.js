@@ -128,10 +128,11 @@ function initBackground() {
   const rippleSpeed = 40
   const rippleFreq = 0.1
   const rippleDecayRate = 0.5
+  const initialRadius = -40
   function rippleAt(x, y, secs, ripple) {
     const dist = Math.hypot(x - ripple.x, y - ripple.y)
     const age = secs - ripple.startSecs
-    const radius = age * rippleSpeed
+    const radius = initialRadius + age * rippleSpeed
     const ringDist = dist - radius
     const envelope = Math.exp(-Math.pow(ringDist / rippleSpread, 2))
     const fade = Math.exp(-age * rippleDecayRate)
